@@ -206,11 +206,11 @@ nav{
 .featured-text-btn>.blue-btn:hover{
     background: var(--first-color-hover);
 }
-.social_icons{
+/* .social_icons{
     display: flex;
     margin-top: 5em;
     gap: 30px;
-}
+} */
 .icon{
     display: flex;
     justify-content: center;
@@ -508,10 +508,6 @@ footer{
     font-weight: 500;
     margin-inline: 20px;
 }
-.footer-social-icons{
-    display: flex;
-    gap: 30px;   
-}
 .bottom-footer{
     font-size: 14px;
     margin-top: 10px;
@@ -571,9 +567,9 @@ footer{
         align-content: flex-start;
         min-height: 60vh;
     }
-    .social_icons{
+    /* .social_icons{
         margin-top: 2em;
-    }
+    } */
     .featured-image{
         order: 1;
         justify-content: center;

@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { filterMovies } from '@/store/features/movieSlice';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import { filterMovies } from '../store/movieSlice';
 
 const FilterContainer = styled.div`
+  margin-bottom: 2rem;
   display: flex;
   gap: 1rem;
-  margin-bottom: 2rem;
   flex-wrap: wrap;
 `;
 
@@ -14,6 +14,7 @@ const Input = styled.input`
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 4px;
+  flex: 1;
   min-width: 200px;
 `;
 
@@ -21,6 +22,7 @@ const Select = styled.select`
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 4px;
+  min-width: 150px;
 `;
 
 export const SearchFilter = () => {
@@ -31,10 +33,13 @@ export const SearchFilter = () => {
     year: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFilters(prev => ({ ...prev, [name]: value }));
-    dispatch(filterMovies({ ...filters, [name]: value }));
+    const newFilters = { ...filters, [name]: value };
+    setFilters(newFilters);
+    dispatch(filterMovies(newFilters));
   };
 
   return (

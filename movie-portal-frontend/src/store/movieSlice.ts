@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Movie } from '@/types/movie';
+import { Movie } from '../types/movie';
+import { fetchMoviesApi } from '../services/api';
 
 interface MovieState {
   movies: Movie[];
@@ -15,11 +16,13 @@ const initialState: MovieState = {
   error: null,
 };
 
-export const fetchMovies = createAsyncThunk('movies/fetchMovies', async () => {
-  const response = await fetch('http://localhost:3000/api/movies');
-  const data = await response.json();
-  return data.data;
-});
+export const fetchMovies = createAsyncThunk(
+  'movies/fetchMovies',
+  async () => {
+    const response = await fetchMoviesApi();
+    return response.data;
+  }
+);
 
 const movieSlice = createSlice({
   name: 'movies',
@@ -34,13 +37,13 @@ const movieSlice = createSlice({
           movie.title.toLowerCase().includes(title.toLowerCase())
         );
       }
-
       if (type) {
         filtered = filtered.filter(movie => movie.type === type);
       }
-
       if (year) {
-        filtered = filtered.filter(movie => movie.releaseYear === parseInt(year));
+        filtered = filtered.filter(movie => 
+          movie.releaseYear === parseInt(year)
+        );
       }
 
       state.filteredMovies = filtered;
@@ -50,6 +53,7 @@ const movieSlice = createSlice({
     builder
       .addCase(fetchMovies.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.loading = false;
@@ -58,7 +62,7 @@ const movieSlice = createSlice({
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Something went wrong';
+        state.error = action.error.message || 'Failed to fetch movies';
       });
   },
 });

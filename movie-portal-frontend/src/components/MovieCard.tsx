@@ -1,22 +1,17 @@
 import styled from 'styled-components';
-import { Movie } from '@/types/movie';
+import { Movie } from '../types/movie';
 
 const Card = styled.div`
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.2s;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
 `;
 
-const Image = styled.img`
+const ImageContainer = styled.div`
   width: 100%;
   height: 200px;
-  object-fit: cover;
+  background-color: #eee;
 `;
 
 const Content = styled.div`
@@ -25,33 +20,37 @@ const Content = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 0.5rem;
-  font-size: 1.2rem;
 `;
 
 const Description = styled.p`
   color: #666;
-  font-size: 0.9rem;
   margin-bottom: 0.5rem;
 `;
 
-const Type = styled.span`
+const Badge = styled.span`
   background: #e0e0e0;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.8rem;
 `;
 
-interface MovieCardProps {
-  movie: Movie;
-}
-
-export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
+export const MovieCard = ({ movie }: { movie: Movie }) => (
   <Card>
-    <Image src={movie.image} alt={movie.title} />
+    <ImageContainer>
+      <img
+        src={movie.image}
+        alt={movie.title}
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        onError={(e) => {
+          const target = e.target as HTMLImageElement;
+          target.src = 'https://via.placeholder.com/300x200?text=Movie';
+        }}
+      />
+    </ImageContainer>
     <Content>
       <Title>{movie.title}</Title>
       <Description>{movie.description}</Description>
-      <Type>{movie.type}</Type>
+      <Badge>{movie.type}</Badge>
     </Content>
   </Card>
 );

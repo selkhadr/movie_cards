@@ -6,4 +6,3 @@ export interface Movie {
     releaseYear: number;
     type: 'action' | 'comedy' | 'drama' | 'horror' | 'sci-fi';
   }
-  

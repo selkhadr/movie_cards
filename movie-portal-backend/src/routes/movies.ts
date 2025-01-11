@@ -2,7 +2,6 @@ import { FastifyInstance } from 'fastify';
 import { movies } from '../data/movies';
 
 export async function movieRoutes(fastify: FastifyInstance) {
-  // Get all movies
   fastify.get('/api/movies', async (request, reply) => {
     try {
       return { 
@@ -17,7 +16,6 @@ export async function movieRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // Get movie by ID
   fastify.get('/api/movies/:id', async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
@@ -43,7 +41,6 @@ export async function movieRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // Search and filter movies
   fastify.get('/api/movies/search', async (request, reply) => {
     try {
       const { title, type, year } = request.query as { 

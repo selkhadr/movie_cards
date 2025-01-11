@@ -6,16 +6,13 @@ const fastify = Fastify({
   logger: true
 });
 
-// Register p
-// lugins
+
 fastify.register(cors, {
-  origin: true // In production, specify your frontend domain
+  origin: true 
 });
 
-// Register routes
 fastify.register(movieRoutes);
 
-// Error handler
 fastify.setErrorHandler((error, request, reply) => {
   fastify.log.error(error);
   reply.status(500).send({
@@ -24,7 +21,6 @@ fastify.setErrorHandler((error, request, reply) => {
   });
 });
 
-// Start server
 const start = async () => {
   try {
     await fastify.listen({ port: 3000, host: '0.0.0.0' });
